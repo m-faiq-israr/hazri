@@ -51,12 +51,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       painter: PSCustomPainter(),
                     ),
                   ),
-                  const Positioned(
+                   Positioned(
                     top: 220,
                     left: 30,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "SIGN UP",
                           style: TextStyle(
