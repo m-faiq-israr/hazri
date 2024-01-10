@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hazri2/global/styles.dart';
 
 class PSCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     Paint paint0 = Paint()
-      ..color = const Color(0xffFACE88)
+      ..color = AppColors.primaryColor
       ..style = PaintingStyle.fill
       ..strokeWidth = 1;
 

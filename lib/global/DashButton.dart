@@ -46,7 +46,7 @@ class DashWelcome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return Card(margin: const EdgeInsets.fromLTRB(0,20,0,0),
       elevation: 5,
       shadowColor: Colors.blueGrey,
       child: Container(
