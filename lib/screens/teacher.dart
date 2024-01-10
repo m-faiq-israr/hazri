@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hazri2/global/DashButton.dart';
+import 'package:hazri2/global/styles.dart';
 import 'package:hazri2/screens/LoginPage.dart';
 
 class Teacher extends StatefulWidget {
@@ -36,7 +37,7 @@ class _TeacherState extends State<Teacher> {
                 color: Colors.white, fontWeight: FontWeight.bold),
           ),
           automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xff9DD1F1),
+          backgroundColor: AppColors.secondaryColor,
           centerTitle: true,
           shadowColor: Colors.blueGrey,
           leading: const Icon(
@@ -74,7 +75,7 @@ class _TeacherState extends State<Teacher> {
                   final userName = userData['name'];
                   return Column(
                     children: [
-                      DashWelcome(name: '$userName!', color: const Color(0xff9DD1F1),),
+                      DashWelcome(name: '$userName!', color: AppColors.textColor, ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -94,7 +95,7 @@ class _TeacherState extends State<Teacher> {
                                   
                                   size: 60,
                                 ),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                               ),
                             ),
                             InkWell(
@@ -106,7 +107,7 @@ class _TeacherState extends State<Teacher> {
                                   color: Colors.white,
                                   size: 60,
                                 ),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                               ),
                             )
                           ],
@@ -129,7 +130,7 @@ class _TeacherState extends State<Teacher> {
                                   color: Colors.white,
                                   size: 60,
                                 ),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                               ),
                             ),
                             InkWell(
@@ -137,7 +138,7 @@ class _TeacherState extends State<Teacher> {
                               child: const DashComp(
                                 name: "Generate Report",
                                 icon: Icon(Icons.receipt_outlined, color: Colors.white, size: 60,),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                                 
                               ),
                             )

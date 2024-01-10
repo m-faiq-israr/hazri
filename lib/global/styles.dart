@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/src/painting/text_style.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -19,4 +20,21 @@ class AppColors {
   static const Color textColor = Color(0xFF031927);
   static const Color accentColor = Color(0xFFBA1200);
 
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [Color(0xFFBA1200), Color(0xFF031927)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient secondaryGradient = LinearGradient(
+    colors: [Color(0xFF508AA8), Color(0xFFC8E0F4)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
+  static const LinearGradient accentGradient = LinearGradient(
+    colors: [Color(0xFFBA1200), Color(0xFFFF0000)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }
