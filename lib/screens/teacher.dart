@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hazri2/global/DashButton.dart';
 import 'package:hazri2/global/styles.dart';
+import 'package:hazri2/global/topBar.dart';
 import 'package:hazri2/screens/LoginPage.dart';
+import 'package:hazri2/screens/AttendanceScreen.dart';
 
 class Teacher extends StatefulWidget {
   final String uid;
@@ -30,39 +32,7 @@ class _TeacherState extends State<Teacher> {
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'TEACHER',
-            style: GoogleFonts.ubuntu(
-                color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          automaticallyImplyLeading: false,
-          backgroundColor: AppColors.secondaryColor,
-          centerTitle: true,
-          shadowColor: Colors.blueGrey,
-          leading: const Icon(
-            Icons.person,
-            color: Colors.white,
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.logout_outlined,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()));
-                }).onError((error, stackTrace) {
-                  print("Error");
-                });
-              },
-            )
-          ],
-        ),
+        appBar: const TopBar(screenName: "TEACHER"),
         body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
               future: userData,
               builder: (context, snapshot) {
@@ -122,7 +92,14 @@ class _TeacherState extends State<Teacher> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
-                              onTap: (){},
+                              onTap: (){
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) =>
+                                    const AttendanceScreen(courseId: "SE-312",sessionDocumentId: "1fb7ph6V9VnA7jMBVzyH" )
+                                    ),
+                                 );
+                              },
                               child: const DashComp(
                                 name: "View Attendance",
                                 icon: Icon(
