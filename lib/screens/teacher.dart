@@ -18,16 +18,28 @@ class Teacher extends StatefulWidget {
 
 class _TeacherState extends State<Teacher> {
    late Future<DocumentSnapshot<Map<String, dynamic>>> userData;
+   //late Future<QuerySnapshot<Map<String, dynamic>>> courseData;
 
   @override
   void initState() {
-    super.initState();
     userData = getUserData();
+    //courseData = getCourseData();
+    super.initState();
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
     return FirebaseFirestore.instance.collection('users').doc(widget.uid).get();
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getCourseData() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection('courses')
+        .get();
+
+    return querySnapshot;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -43,6 +55,8 @@ class _TeacherState extends State<Teacher> {
                 } else {
                   final userData = snapshot.data!.data()!;
                   final userName = userData['name'];
+                  print('userdata: $userData');
+
                   return Column(
                     children: [
                       DashWelcome(name: '$userName!', color: AppColors.textColor, ),
@@ -92,11 +106,20 @@ class _TeacherState extends State<Teacher> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
-                              onTap: (){
+                              onTap: () async{
+
+                                // Fetch courseData inside the onTap callback
+                                  QuerySnapshot<Map<String, dynamic>> courseDataSnapshot = await getCourseData();
+
+                                  // Extract the courseCode from the first document in the query result
+                                  String courseCode = courseDataSnapshot.docs.isNotEmpty
+                                      ? courseDataSnapshot.docs[0].data()['courseCode']
+                                      : '';
+
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(builder: (context) =>
-                                    const AttendanceScreen(courseId: "SE-312",sessionDocumentId: "1fb7ph6V9VnA7jMBVzyH" )
+                                    AttendanceScreen(courseCode: courseCode ,sessionDocumentId: "1fb7ph6V9VnA7jMBVzyH" )
                                     ),
                                  );
                               },
@@ -111,7 +134,8 @@ class _TeacherState extends State<Teacher> {
                               ),
                             ),
                             InkWell(
-                              onTap: (){},
+                              onTap: (){
+                              },
                               child: const DashComp(
                                 name: "Generate Report",
                                 icon: Icon(Icons.receipt_outlined, color: Colors.white, size: 60,),

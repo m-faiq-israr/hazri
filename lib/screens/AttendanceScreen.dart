@@ -1,53 +1,81 @@
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:path_provider/path_provider.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-
-
+import '../global/styles.dart';
 import '../global/topBar.dart';
+import '../utils/PermissionHelper.dart';
 
-class AttendanceScreen extends StatelessWidget {
-  final String courseId;
+class AttendanceScreen extends StatefulWidget {
+  final String courseCode;
   final String sessionDocumentId;
 
-  const AttendanceScreen({super.key, required this.courseId, required this.sessionDocumentId});
+  const AttendanceScreen({super.key, required this.courseCode, required this.sessionDocumentId});
+
+  @override
+  AttendanceScreenState createState() => AttendanceScreenState();
+}
+
+class AttendanceScreenState extends State<AttendanceScreen> {
+  late Future<DocumentSnapshot<Map<String, dynamic>>>  attendanceData;
+
+  @override
+  void initState() {
+    attendanceData = getAttendanceData();
+    super.initState();
+  }
+
+  Future<DocumentSnapshot<Map<String, dynamic>>> getAttendanceData() async {
+    return FirebaseFirestore.instance
+            .collection('attendance')
+            .doc(widget.courseCode)
+            .collection('session')
+            .doc(widget.sessionDocumentId)
+            .get();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const TopBar(screenName: "TEACHER"),
       floatingActionButton: FloatingActionButton(
-          tooltip: 'Print Document',
-          onPressed: () async {
-            Uint8List pdfBytes = await buildPdf();
+        tooltip: 'Print Document',
+        onPressed: () async {
+          // Wait for the attendanceData Future to complete
+          DocumentSnapshot<Map<String, dynamic>> snapshot = await attendanceData;
+          print('attendance: $attendanceData.size');
+          final courseCode = widget.courseCode;
+          // Check if the snapshot contains data
+          if (snapshot.exists) {
+            Uint8List pdfBytes = await buildPdf(snapshot, courseCode);
             await savePdf(pdfBytes);
-            // Handle the generated PDF data as needed (e.g., save it, send it, etc.)
-            // For now, you can print the length of the generated PDF data
-            print('PDF Length: ${pdfBytes.length}');
-            },
-          child: const Icon(Icons.print),
-        ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('attendance')
-            .doc('SE-312')
-            .collection('session')
-            .doc(sessionDocumentId)
-            .snapshots(),
+          } else {
+            ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('No data found'),
+              duration: Duration(seconds: 5) ,
+              )
+            );
+          }
+        },
+        child: const Icon(Icons.print),
+      ),
+      body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        future: attendanceData,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator(); // Loading indicator while data is being fetched
           }
-
           if (!snapshot.hasData || !snapshot.data!.exists) {
+
             return const Text('No data found'); // Handle the case where the document doesn't exist
           }
-
           // Access the attendance data from the snapshot
-          Map<String, dynamic> attendanceData = snapshot.data!.data() as Map<String, dynamic>;
+            final attendanceData = snapshot.data!.data()!;
 
           // Extract the required fields from the attendanceData
           List<String> absentStudents = List<String>.from(attendanceData['absentStudents'] ?? []);
@@ -68,22 +96,71 @@ class AttendanceScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-  //generate the pdf
-  Future<Uint8List> buildPdf() async {
+  // generate the pdf
+  Future<Uint8List> buildPdf(DocumentSnapshot<Map<String, dynamic>> attendanceData, String courseCode) async {
     // Create the Pdf document
     final pw.Document doc = pw.Document();
 
+    // Load the image from assets
+    final Uint8List imageList = (await rootBundle.load('assets/ned_logo.png')).buffer.asUint8List();
     // Add one page with centered text "Hello World"
     doc.addPage(
       pw.Page(
         build: (pw.Context context) {
-          return pw.ConstrainedBox(
-            constraints: const pw.BoxConstraints.expand(),
-            child: pw.FittedBox(
-              child: pw.Text('Hello World'),
-            ),
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              // Header Section with Logo and Title
+              pw.Row(
+                children: [
+                  pw.Image(pw.MemoryImage(imageList), width: 100, height: 100),
+                  pw.SizedBox(width: 20),
+                  pw.Text('Attendance Report', style: pw.TextStyle(fontSize: 20, fontWeight: pw.FontWeight.bold)),
+                ],
+              ),
+              pw.SizedBox(height: 20),
+
+              // Attendance Information
+              pw.Text('Course: $courseCode', style: const pw.TextStyle(fontSize: 16)),
+              pw.Text('Section: ${attendanceData['section']}', style: const pw.TextStyle(fontSize: 16)),
+              pw.Text('Session Date: ${attendanceData['date'].toDate().toLocal()}', style: const pw.TextStyle(fontSize: 16)),
+
+              pw.SizedBox(height: 20),
+
+              // Table with Absent and Present Students
+              pw.Table(
+                border: pw.TableBorder.all(),
+                columnWidths: {
+                  0: const pw.IntrinsicColumnWidth(),
+                  1: const pw.IntrinsicColumnWidth(),
+                },
+                children: [
+                  pw.TableRow(children: [
+                    pw.Text('Absent Students', style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                    pw.Text('Present Students', style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                  ]),
+                  pw.TableRow(children: [
+                            pw.Column(
+                              crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              children: (attendanceData['absentStudents'] as List<dynamic>)
+                                  .map((dynamic student) {
+                                    return pw.Text(student.toString());
+                                  })
+                                  .toList(),
+                            ),
+                            pw.Column(
+                              crossAxisAlignment: pw.CrossAxisAlignment.start,
+                              children: (attendanceData['presentStudents'] as List<dynamic>)
+                                  .map((dynamic student) {
+                                    return pw.Text(student.toString());
+                                  })
+                                  .toList(),
+                            ),
+                          ]),
+                ],
+              ),
+            ],
           );
         },
       ),
@@ -93,24 +170,62 @@ class AttendanceScreen extends StatelessWidget {
     return await doc.save();
   }
 
-  //save the pdf using provider in system path
+  // save the pdf using provider in system path
   Future<void> savePdf(Uint8List pdfBytes) async {
-     // Get the list of external storage directories
-      List<Directory>? directories = await getExternalStorageDirectories();
+    final granted = await PermissionHelper.requestStoragePermissions();
+    if (!granted) {
+      // Get the list of external storage directories
+      Directory? directories = await getApplicationDocumentsDirectory();
+      Directory generalDownloadDir = Directory('/storage/emulated/0/Download'); // THIS WORKS for android only !!!!!!
 
       // Check if there's a valid directory in the list
-      if (directories != null && directories.isNotEmpty) {
-        // Use the first directory in the list
-        final Directory directory = directories[0];
-        final String path = '${directory.path}/attendance_report.pdf';
+      // if (directories != null && directories.isNotEmpty) {
+      // Use the first directory in the list
+      // final Directory directory = directories[0];
+      final String path = '${generalDownloadDir.path}/attendance_report.pdf';
 
-        // Save the Pdf file
-        final File file = File(path);
-        await file.writeAsBytes(pdfBytes);
+      // Save the Pdf file
+      final File file = File(path);
+      await file.writeAsBytes(pdfBytes);
 
+      // Show a notification
+      showNotification(path);
 
-        print('PDF saved at: $path');
-      } else {
-        print('Error: Unable to find external storage directory.');
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('PDF saved at: $path'),
+            duration: Duration(seconds: 5) ,
+          )
+      );
+
+    } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Writing Permission Denied, Allow from Settings'),
+              duration: Duration(seconds: 5) ,
+            )
+        );
       }
+    }
   }
+
+  Future<void> showNotification(String pdfPath) async {
+    await AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 0,
+        channelKey: 'basic_channel',
+        title: 'PDF Generated',
+        body: 'Tap to Open!',
+        actionType: ActionType.Default,
+        notificationLayout: NotificationLayout.BigText,
+        payload: {'pdfPath': pdfPath},
+      ),
+      actionButtons: [
+        NotificationActionButton(
+          key: 'openPdfAction',
+          label: 'Open PDF',
+        ),
+      ],
+    );
+  }
+
