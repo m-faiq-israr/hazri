@@ -55,7 +55,6 @@ class _TeacherState extends State<Teacher> {
                 } else {
                   final userData = snapshot.data!.data()!;
                   final userName = userData['name'];
-                  print('userdata: $userData');
 
                   return Column(
                     children: [

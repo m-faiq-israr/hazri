@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:hazri2/firebase_options.dart';
 import 'package:hazri2/screens/LoginPage.dart';
+import 'package:hazri2/screens/test.dart';
 //import 'package:share_plus/share_plus.dart';
 
 void main() async{
@@ -24,7 +25,6 @@ void main() async{
     AwesomeNotifications().requestPermissionToSendNotifications();
   }
 });
-
 
   AwesomeNotifications().initialize(
     null,

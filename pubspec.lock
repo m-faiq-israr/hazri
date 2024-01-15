@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.6"
+  dynamic_table:
+    dependency: "direct main"
+    description:
+      name: dynamic_table
+      sha256: a41f9137053b6d0a96bf3fd1fe62b5c647fadb81f7a652e29fa8c62b2d411bf0
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1-beta.2"
   fake_async:
     dependency: transitive
     description:
@@ -222,14 +230,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_expandable_table:
-    dependency: "direct main"
+  flutter_datetime_picker_bdaya:
+    dependency: transitive
     description:
-      name: flutter_expandable_table
-      sha256: "38cc2dd257e633c718f1733c1f6d99adac778ee0c5b379084632101c3a252d16"
+      name: flutter_datetime_picker_bdaya
+      sha256: "6cb42a7d659cb9a10afa0a390b81677e15fd2f7e340e7eaffabf770e6b6709c0"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "3.0.2"
+  flutter_editable_table:
+    dependency: "direct main"
+    description:
+      name: flutter_editable_table
+      sha256: "5fcca566e5e177c08db64f20a5af28317bae24df584d85013b443582f6450e8b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.2"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -238,14 +254,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
-  flutter_scroll_shadow:
-    dependency: transitive
-    description:
-      name: flutter_scroll_shadow
-      sha256: f6a7d65279e1bd79c8a312596d299b88c1a3e5aa1026c417561ae622d286de48
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -312,14 +320,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
-  linked_scroll_controller:
-    dependency: transitive
-    description:
-      name: linked_scroll_controller
-      sha256: e6020062bcf4ffc907ee7fd090fa971e65d8dfaac3c62baf601a3ced0b37986a
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.0"
   lints:
     dependency: transitive
     description:
