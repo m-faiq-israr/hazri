@@ -1,16 +1,21 @@
+// @dart=2.9
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hazri2/face_recognition/camera_detector.dart';
 import 'package:hazri2/global/DashButton.dart';
 import 'package:hazri2/global/styles.dart';
 import 'package:hazri2/global/topBar.dart';
 import 'package:hazri2/screens/LoginPage.dart';
 import 'package:hazri2/screens/AttendanceScreen.dart';
 
+import '../face_recognition/capture_attendance.dart';
+
 class Teacher extends StatefulWidget {
   final String uid;
-  const Teacher({super.key, required this.uid});
+  const Teacher({Key key, @required this.uid}) : super(key: key);
 
   @override
   State<Teacher> createState() => _TeacherState();
@@ -53,7 +58,7 @@ class _TeacherState extends State<Teacher> {
                 } else if (snapshot.hasError) {
                   return Text("Error: ${snapshot.error}");
                 } else {
-                  final userData = snapshot.data!.data()!;
+                  final userData = snapshot.data.data();
                   final userName = userData['name'];
 
                   return Column(
@@ -62,27 +67,32 @@ class _TeacherState extends State<Teacher> {
                       const SizedBox(
                         height: 10,
                       ),
-                        Padding(
+                      Padding(
                         padding: const EdgeInsets.only(
                             left: 30.0, right: 30.0, top: 20, bottom: 5),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
-                              onTap: (){},
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                           const CaptureAttendance())));
+                              },
                               child: const DashComp(
                                 name: "Capture Attendance",
                                 icon: Icon(
                                   Icons.camera_alt_outlined,
                                   color: Colors.white,
-                                  
                                   size: 60,
                                 ),
                                 color: AppColors.secondaryColor,
                               ),
                             ),
                             InkWell(
-                              onTap: (){},
+                              onTap: () {},
                               child: const DashComp(
                                 name: "Manual Attendance",
                                 icon: Icon(
@@ -99,7 +109,7 @@ class _TeacherState extends State<Teacher> {
                       const SizedBox(
                         height: 10,
                       ),
-                       Padding(
+                      Padding(
                         padding: const EdgeInsets.only(right: 30, left: 30),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,8 +158,7 @@ class _TeacherState extends State<Teacher> {
                     ],
                   );
                 }
-              })
-      ),
+              })),
       onWillPop: () async {
         return false;
       },

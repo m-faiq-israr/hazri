@@ -1,3 +1,5 @@
+// @dart=2.9
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -44,7 +46,7 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp( const MyApp(),);
 }
 
 /*
@@ -59,7 +61,7 @@ Future<void> openPdfFile(String pdfPath) async {
 */
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: const LoginPage(),
+      // theme: Provider.of<ThemeProvider>(context).themeData
     );
   }
 }
