@@ -3,7 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hazri2/global/DashButton.dart';
+import 'package:hazri2/global/styles.dart';
+import 'package:hazri2/global/topBar.dart';
 import 'package:hazri2/screens/LoginPage.dart';
+import 'package:hazri2/screens/AttendanceScreen.dart';
 
 class Teacher extends StatefulWidget {
   final String uid;
@@ -15,53 +18,33 @@ class Teacher extends StatefulWidget {
 
 class _TeacherState extends State<Teacher> {
    late Future<DocumentSnapshot<Map<String, dynamic>>> userData;
+   //late Future<QuerySnapshot<Map<String, dynamic>>> courseData;
 
   @override
   void initState() {
-    super.initState();
     userData = getUserData();
+    //courseData = getCourseData();
+    super.initState();
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
     return FirebaseFirestore.instance.collection('users').doc(widget.uid).get();
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getCourseData() async {
+    QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore
+        .instance
+        .collection('courses')
+        .get();
+
+    return querySnapshot;
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'TEACHER',
-            style: GoogleFonts.ubuntu(
-                color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          automaticallyImplyLeading: false,
-          backgroundColor: const Color(0xff9DD1F1),
-          centerTitle: true,
-          shadowColor: Colors.blueGrey,
-          leading: const Icon(
-            Icons.person,
-            color: Colors.white,
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.logout_outlined,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()));
-                }).onError((error, stackTrace) {
-                  print("Error");
-                });
-              },
-            )
-          ],
-        ),
+        appBar: const TopBar(screenName: "TEACHER"),
         body: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
               future: userData,
               builder: (context, snapshot) {
@@ -72,9 +55,10 @@ class _TeacherState extends State<Teacher> {
                 } else {
                   final userData = snapshot.data!.data()!;
                   final userName = userData['name'];
+
                   return Column(
                     children: [
-                      DashWelcome(name: '$userName!', color: const Color(0xff9DD1F1),),
+                      DashWelcome(name: '$userName!', color: AppColors.textColor, ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -94,7 +78,7 @@ class _TeacherState extends State<Teacher> {
                                   
                                   size: 60,
                                 ),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                               ),
                             ),
                             InkWell(
@@ -106,7 +90,7 @@ class _TeacherState extends State<Teacher> {
                                   color: Colors.white,
                                   size: 60,
                                 ),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                               ),
                             )
                           ],
@@ -121,7 +105,23 @@ class _TeacherState extends State<Teacher> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             InkWell(
-                              onTap: (){},
+                              onTap: () async{
+
+                                // Fetch courseData inside the onTap callback
+                                  QuerySnapshot<Map<String, dynamic>> courseDataSnapshot = await getCourseData();
+
+                                  // Extract the courseCode from the first document in the query result
+                                  String courseCode = courseDataSnapshot.docs.isNotEmpty
+                                      ? courseDataSnapshot.docs[0].data()['courseCode']
+                                      : '';
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) =>
+                                    AttendanceScreen(courseCode: courseCode ,sessionDocumentId: "1fb7ph6V9VnA7jMBVzyH" )
+                                    ),
+                                 );
+                              },
                               child: const DashComp(
                                 name: "View Attendance",
                                 icon: Icon(
@@ -129,15 +129,16 @@ class _TeacherState extends State<Teacher> {
                                   color: Colors.white,
                                   size: 60,
                                 ),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                               ),
                             ),
                             InkWell(
-                              onTap: (){},
+                              onTap: (){
+                              },
                               child: const DashComp(
                                 name: "Generate Report",
                                 icon: Icon(Icons.receipt_outlined, color: Colors.white, size: 60,),
-                                color: Color(0xff9DD1F1),
+                                color: AppColors.secondaryColor,
                                 
                               ),
                             )
