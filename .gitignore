@@ -70,3 +70,7 @@ pubspec.lock
 
 .flutter-plugins
 .flutter-plugins-dependencies
+*.cc
+linux/flutter/generated_plugins.cmake
+macos/Flutter/GeneratedPluginRegistrant.swift
+windows/flutter/generated_plugins.cmake
