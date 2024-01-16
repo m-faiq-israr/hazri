@@ -16,20 +16,6 @@ import 'package:flutter_editable_table/constants.dart';
 import 'package:flutter_editable_table/flutter_editable_table.dart';
 import 'package:intl/intl.dart';
 
-class RowEntity {
-  String name;
-  String status;
-
-  RowEntity(this.name, this.status);
-
-  // Method to convert RowEntity to a Map
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'status': status,
-    };
-  }
-}
 
 class AttendanceScreen extends StatefulWidget {
   final String courseCode;
@@ -681,7 +667,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
       await file.writeAsBytes(pdfBytes);
 
       // Show a notification
-      // showNotification(path);
+      //showNotification(path);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('PDF saved at: $path'),
@@ -695,23 +681,23 @@ class AttendanceScreenState extends State<AttendanceScreen> {
     }
   }
 }
-
-// Future<void> showNotification(String pdfPath) async {
-//   await AwesomeNotifications().createNotification(
-//     content: NotificationContent(
-//       id: 0,
-//       channelKey: 'basic_channel',
-//       title: 'PDF Generated',
-//       body: 'Tap to Open!',
-//       actionType: ActionType.Default,
-//       notificationLayout: NotificationLayout.BigText,
-//       payload: {'pdfPath': pdfPath},
-//     ),
-//     actionButtons: [
-//       NotificationActionButton(
-//         key: 'openPdfAction',
-//         label: 'Open PDF',
-//       ),
-//     ],
-//   );
-// }
+/*
+Future<void> showNotification(String pdfPath) async {
+  await AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: 0,
+      channelKey: 'basic_channel',
+      title: 'PDF Generated',
+      body: 'Tap to Open!',
+      actionType: ActionType.Default,
+      notificationLayout: NotificationLayout.BigText,
+      payload: {'pdfPath': pdfPath},
+    ),
+    actionButtons: [
+      NotificationActionButton(
+        key: 'openPdfAction',
+        label: 'Open PDF',
+      ),
+    ],
+  );
+}*/
