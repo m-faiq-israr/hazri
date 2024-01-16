@@ -42,10 +42,10 @@ class DashComp extends StatelessWidget {
 
 class DashWelcome extends StatelessWidget {
   final String name;
-  final Color? color; //allow single colors
-  final LinearGradient? gradient;  //allow gradients
+  final Color color; //allow single colors
+  final LinearGradient gradient;  //allow gradients
 
-  const DashWelcome({super.key, @required this.name, this.color, this.gradient});
+  const DashWelcome({Key key, @required this.name, this.color, this.gradient});
 
   @override
   Widget build(BuildContext context) {

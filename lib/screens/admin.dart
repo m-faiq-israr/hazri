@@ -4,12 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hazri2/face_recognition/view_label.dart';
-import 'package:hazri2/global/DashButton.dart';
-import 'package:hazri2/screens/LoginPage.dart';
-
+import 'package:hazri/face_recognition/view_label.dart';
+import 'package:hazri/global/DashButton.dart';
+import 'package:hazri/screens/LoginPage.dart';
 import '../face_recognition/capture_attendance.dart';
-import 'package:hazri2/face_recognition/add_user.dart';
+import 'package:hazri/face_recognition/add_user.dart';
 
 class Admin extends StatefulWidget {
   final String uid;

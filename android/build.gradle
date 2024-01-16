@@ -23,7 +23,11 @@ subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"
 }
 subprojects {
-    project.evaluationDependsOn(':app')
+    afterEvaluate {
+        android {
+            namespace "com.example.hazri"
+        }
+    }
 }
 
 task clean(type: Delete) {

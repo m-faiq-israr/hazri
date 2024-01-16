@@ -4,12 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hazri2/face_recognition/camera_detector.dart';
-import 'package:hazri2/global/DashButton.dart';
-import 'package:hazri2/global/styles.dart';
-import 'package:hazri2/global/topBar.dart';
-import 'package:hazri2/screens/LoginPage.dart';
-import 'package:hazri2/screens/AttendanceScreen.dart';
+import 'package:hazri/face_recognition/camera_detector.dart';
+import 'package:hazri/global/DashButton.dart';
+import 'package:hazri/global/styles.dart';
+import 'package:hazri/global/topBar.dart';
+import 'package:hazri/screens/LoginPage.dart';
+import 'package:hazri/screens/AttendanceScreen.dart';
 
 import '../face_recognition/capture_attendance.dart';
 
@@ -22,7 +22,7 @@ class Teacher extends StatefulWidget {
 }
 
 class _TeacherState extends State<Teacher> {
-   late Future<DocumentSnapshot<Map<String, dynamic>>> userData;
+  Future<DocumentSnapshot<Map<String, dynamic>>> userData;
    //late Future<QuerySnapshot<Map<String, dynamic>>> courseData;
 
   @override
