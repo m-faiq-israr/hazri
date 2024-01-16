@@ -5,8 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hazri/global/dashButton.dart';
-import 'package:hazri/screens/LoginPage.dart';
+import 'package:hazri2/global/dashButton.dart';
+import 'package:hazri2/screens/LoginPage.dart';
 
 class Student extends StatefulWidget {
   final String uid;

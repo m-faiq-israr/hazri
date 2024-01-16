@@ -5,7 +5,7 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hazri/face_recognition/DataStorage.dart';
+import 'package:hazri2/face_recognition/DataStorage.dart';
 import 'package:quiver/collection.dart';
 import 'package:image/image.dart' as imglib;
 import 'package:camera/camera.dart';

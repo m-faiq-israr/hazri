@@ -1,7 +1,7 @@
 // @dart=2.9
 
 import 'package:flutter/material.dart';
-import 'package:hazri/global/styles.dart';
+import 'package:hazri2/global/styles.dart';
 
 class PSCustomPainter extends CustomPainter {
   @override

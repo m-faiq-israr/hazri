@@ -8,6 +8,7 @@ import 'package:hazri2/face_recognition/camera_detector.dart';
 import 'package:hazri2/global/DashButton.dart';
 import 'package:hazri2/screens/DateListScreen.dart';
 import 'package:hazri2/screens/LoginPage.dart';
+import 'package:hazri2/global/styles.dart';
 
 import '../face_recognition/capture_attendance.dart';
 import 'AttendanceScreen.dart';
