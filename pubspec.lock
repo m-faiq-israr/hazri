@@ -25,22 +25,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.10.0"
-  awesome_notifications:
-    dependency: "direct main"
-    description:
-      name: awesome_notifications
-      sha256: "65f730f9c0e73a346039ef746384bcff1773f9f03821b859705a7ab8db977b23"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.2"
-  awesome_notifications_core:
-    dependency: "direct main"
-    description:
-      name: awesome_notifications_core
-      sha256: "7042ad1feb78800edd3f0fd26f049bd1483e0ef226bb2d88ad8faeb665564459"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.0"
   barcode:
     dependency: transitive
     description:

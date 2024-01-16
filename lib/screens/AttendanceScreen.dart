@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -698,7 +697,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
       await file.writeAsBytes(pdfBytes);
 
       // Show a notification
-      showNotification(path);
+      //showNotification(path);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('PDF saved at: $path'),
@@ -712,7 +711,7 @@ class AttendanceScreenState extends State<AttendanceScreen> {
     }
   }
 }
-
+/*
 Future<void> showNotification(String pdfPath) async {
   await AwesomeNotifications().createNotification(
     content: NotificationContent(
@@ -731,4 +730,4 @@ Future<void> showNotification(String pdfPath) async {
       ),
     ],
   );
-}
+}*/
