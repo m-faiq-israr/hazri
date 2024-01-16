@@ -1,9 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:hazri2/firebase_options.dart';
-import 'package:hazri2/screens/LoginPage.dart';
-import 'package:hazri2/screens/test.dart';
+import 'package:hazri/firebase_options.dart';
+import 'package:hazri/screens/LoginPage.dart';
+import 'package:hazri/screens/test.dart';
 //import 'package:share_plus/share_plus.dart';
 
 void main() async{

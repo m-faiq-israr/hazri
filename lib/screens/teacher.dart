@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:hazri2/global/DashButton.dart';
-import 'package:hazri2/global/styles.dart';
-import 'package:hazri2/global/topBar.dart';
-import 'package:hazri2/screens/LoginPage.dart';
-import 'package:hazri2/screens/AttendanceScreen.dart';
+import 'package:hazri/global/DashButton.dart';
+import 'package:hazri/global/styles.dart';
+import 'package:hazri/global/topBar.dart';
+import 'package:hazri/screens/LoginPage.dart';
+import 'package:hazri/screens/AttendanceScreen.dart';
 
 class Teacher extends StatefulWidget {
   final String uid;

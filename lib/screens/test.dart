@@ -1,10 +1,9 @@
 
-
 import 'dart:math';
 
 import 'package:dynamic_table/dynamic_table.dart';
 import 'package:flutter/material.dart';
-import 'package:hazri2/screens/dummy_data.dart';
+import 'package:hazri/screens/dummy_data.dart';
 
 class Test extends StatefulWidget {
    const Test({super.key});

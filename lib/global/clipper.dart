@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hazri2/global/styles.dart';
+import 'package:hazri/global/styles.dart';
 
 class RPSCustomPainter extends CustomPainter {
   @override

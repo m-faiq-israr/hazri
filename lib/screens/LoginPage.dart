@@ -2,13 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hazri2/global/clipper.dart';
-import 'package:hazri2/global/clipper2.dart';
-import 'package:hazri2/global/styles.dart';
-import 'package:hazri2/screens/SignUpPage.dart';
-import 'package:hazri2/screens/admin.dart';
-import 'package:hazri2/screens/student.dart';
-import 'package:hazri2/screens/teacher.dart';
+import 'package:hazri/global/clipper.dart';
+import 'package:hazri/global/clipper2.dart';
+import 'package:hazri/global/styles.dart';
+import 'package:hazri/screens/SignUpPage.dart';
+import 'package:hazri/screens/admin.dart';
+import 'package:hazri/screens/student.dart';
+import 'package:hazri/screens/teacher.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
