@@ -16,20 +16,6 @@ import 'package:flutter_editable_table/constants.dart';
 import 'package:flutter_editable_table/flutter_editable_table.dart';
 import 'package:intl/intl.dart';
 
-class RowEntity {
-  String name;
-  String status;
-
-  RowEntity(this.name, this.status);
-
-  // Method to convert RowEntity to a Map
-  Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'status': status,
-    };
-  }
-}
 
 class AttendanceScreen extends StatefulWidget {
   final String courseCode;

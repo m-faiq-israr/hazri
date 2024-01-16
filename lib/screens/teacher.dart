@@ -103,11 +103,12 @@ Future<QuerySnapshot<Map<String, dynamic>>> getCourseData() async {
                           children: [
                             InkWell(
                               onTap: () {
+                                String id = widget.uid;
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) =>
-                                           const CaptureAttendance())));
+                                            CaptureAttendance(teacherId: id,))));
                               },
                               child: const DashComp(
                                 name: "Capture Attendance",
