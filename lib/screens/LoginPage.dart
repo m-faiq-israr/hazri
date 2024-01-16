@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hazri2/global/clipper.dart';
 import 'package:hazri2/global/clipper2.dart';
+import 'package:hazri2/global/styles.dart';
 import 'package:hazri2/screens/SignUpPage.dart';
 import 'package:hazri2/screens/admin.dart';
 import 'package:hazri2/screens/student.dart';
@@ -48,12 +49,12 @@ class _LoginPageState extends State<LoginPage> {
                     painter: PSCustomPainter(),
                   ),
                 ),
-                Positioned(
+                 Positioned(
                   top: 220,
                   left: 30,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       Text(
                         "LOGIN",
                         style: TextStyle(
@@ -197,13 +198,18 @@ class _LoginPageState extends State<LoginPage> {
                               }
                             }
                           } catch (e) {
-                            print('Error during login: $e');
-                            // Handle login error (e.g., show error message)
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  // Handle login error (e.g., show error message)
+                                    content: Text('Error during sign up: $e'),
+                                    duration: const Duration(seconds: 5) ,
+                                )
+                            );
                           }
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: const Color(0xff9DD1F1),
+                        backgroundColor: AppColors.primaryColor,
                         foregroundColor: Colors.white,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -213,9 +219,7 @@ class _LoginPageState extends State<LoginPage> {
                         padding: EdgeInsets.all(12.0),
                         child: Text(
                           "Log In",
-                          style: GoogleFonts.ubuntu(
-                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 17),
-            
+                          style: TextStyle(fontSize: 16.0, color: AppColors.textColor),
                         ),
                       ),
                     ),
@@ -232,8 +236,11 @@ class _LoginPageState extends State<LoginPage> {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
-                          color: Colors.black),
+                          color: AppColors.textColor),
                     ),
+                    const SizedBox(
+                        width: 5,
+                      ),
                     InkWell(
                       onTap: () {
                         Navigator.pushReplacement(
@@ -242,11 +249,11 @@ class _LoginPageState extends State<LoginPage> {
                                 builder: (context) => const SignUpPage()));
                       },
                       child: const Text(
-                        "SIGN UP",
+                        "Sign Up",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
-                            color: Color(0xff9DD1F1)),
+                            color: AppColors.secondaryColor),
                       ),
                     ),
                   ],

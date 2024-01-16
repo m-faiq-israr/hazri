@@ -3,10 +3,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hazri2/global/clipper.dart';
 import 'package:hazri2/global/clipper2.dart';
+import 'package:hazri2/global/styles.dart';
 import 'package:hazri2/screens/LoginPage.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -53,12 +53,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       painter: PSCustomPainter(),
                     ),
                   ),
-                  Positioned(
+                   Positioned(
                     top: 220,
                     left: 30,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           "SIGN UP",
                           style: TextStyle(
@@ -327,14 +327,19 @@ class _SignUpPageState extends State<SignUpPage> {
                                                 const LoginPage()));
                                   }
                                 } catch (e) {
-                                  print('Error during sign up: $e');
-                                  // Handle signup error (e.g., show error message)
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                      // Handle login error (e.g., show error message)
+                                        content: Text('Error during sign up: $e'),
+                                        duration: const Duration(seconds: 5) ,
+                                    )
+                                  );
                                 }
                               }
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xff9DD1F1),
-                              foregroundColor: Colors.white,
+                              backgroundColor: AppColors.primaryColor,
+                              foregroundColor: AppColors.textColor,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
                               ),
@@ -363,8 +368,9 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
-                              color: Colors.black),
+                              color: AppColors.textColor),
                         ),
+                        const SizedBox(width: 5,),
                         InkWell(
                           onTap: () {
                             Navigator.push(
@@ -373,11 +379,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                     builder: (context) => const LoginPage()));
                           },
                           child: const Text(
-                            "SIGN IN",
+                            "Sign In",
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
-                                color: Color(0xff9DD1F1)),
+                                color: AppColors.secondaryColor
+                            ),
                           ),
                         ),
                       ],

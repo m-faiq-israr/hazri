@@ -8,6 +8,7 @@ import 'package:hazri2/face_recognition/camera_detector.dart';
 import 'package:hazri2/global/DashButton.dart';
 import 'package:hazri2/screens/DateListScreen.dart';
 import 'package:hazri2/screens/LoginPage.dart';
+import 'package:hazri2/global/styles.dart';
 
 import '../face_recognition/capture_attendance.dart';
 import 'AttendanceScreen.dart';
@@ -22,11 +23,13 @@ class Teacher extends StatefulWidget {
 
 class _TeacherState extends State<Teacher> {
   Future<DocumentSnapshot<Map<String, dynamic>>> userData;
+   //late Future<QuerySnapshot<Map<String, dynamic>>> courseData;
 
   @override
   void initState() {
-    super.initState();
     userData = getUserData();
+    //courseData = getCourseData();
+    super.initState();
   }
 
   Future<DocumentSnapshot<Map<String, dynamic>>> getUserData() async {
@@ -87,12 +90,10 @@ class _TeacherState extends State<Teacher> {
                 } else {
                   final userData = snapshot.data.data();
                   final userName = userData['name'];
+
                   return Column(
                     children: [
-                      DashWelcome(
-                        name: '$userName!',
-                        color:  const Color(0xff508AA8),
-                      ),
+                      DashWelcome(name: '$userName!', color: AppColors.textColor, ),
                       const SizedBox(
                         height: 10,
                       ),
@@ -104,11 +105,12 @@ class _TeacherState extends State<Teacher> {
                           children: [
                             InkWell(
                               onTap: () {
+                                String id = widget.uid;
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: ((context) =>
-                                            const CaptureAttendance())));
+                                            CaptureAttendance(teacherId: id,))));
                               },
                               child: const DashComp(
                                 name: "Capture Attendance",
@@ -117,7 +119,7 @@ class _TeacherState extends State<Teacher> {
                                   color: Colors.white,
                                   size: 60,
                                 ),
-                                color:   Color(0xff508AA8),
+                                color: AppColors.secondaryColor,
                               ),
                             ),
                             InkWell(
@@ -135,7 +137,7 @@ class _TeacherState extends State<Teacher> {
                                   color: Colors.white,
                                   size: 60,
                                 ),
-                                color:   Color(0xff508AA8),
+                                color: AppColors.secondaryColor,
                               ),
                             )
                           ],
@@ -166,19 +168,17 @@ class _TeacherState extends State<Teacher> {
                                   color: Colors.white,
                                   size: 60,
                                 ),
-                                color: Color(0xff508AA8),
+                                color: AppColors.secondaryColor,
                               ),
                             ),
                             InkWell(
-                              onTap: () {},
+                              onTap: (){
+                              },
                               child: const DashComp(
                                 name: "Generate Report",
-                                icon: Icon(
-                                  Icons.receipt_outlined,
-                                  color: Colors.white,
-                                  size: 60,
-                                ),
-                                color: Color(0xff508AA8),
+                                icon: Icon(Icons.receipt_outlined, color: Colors.white, size: 60,),
+                                color: AppColors.secondaryColor,
+                                
                               ),
                             )
                           ],
